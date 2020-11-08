@@ -22,7 +22,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-import userContext from './Contexts/userContext'
+import userContext from '../Contexts/userContext'
 
 
 
@@ -32,7 +32,7 @@ const App = ({navigation}) => {
 
   GoogleSignin.configure();
 
-  const signIn = async () => {
+  const signInGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
@@ -70,7 +70,7 @@ const App = ({navigation}) => {
                   style={{ width: 192, height: 48 }}
                   size={GoogleSigninButton.Size.Wide}
                   color={GoogleSigninButton.Color.Dark}
-                  onPress={signIn}
+                  onPress={signInGoogle}
               />
             </View>
           </View>

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import App from './App'
+import App from './pages/App'
 import Home from './pages/Home'
 
 const Stack = createStackNavigator();

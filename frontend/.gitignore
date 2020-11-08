@@ -34,7 +34,7 @@ google-services.json
 gradle.properties
 tuul.keystore
 debug.keystore
-
+strings.xml
 
 # node.js
 #
