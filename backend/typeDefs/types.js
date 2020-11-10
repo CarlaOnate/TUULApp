@@ -2,9 +2,20 @@ const {gql} = require("apollo-server-express")
 
 const types = gql`
     input UserInput {
-        name: String
-        lastname: String
+        email: String
         googleAccount: String
+    }
+    
+    input GoogleUserInput {
+        idToken: ID!
+        googleAccount: GoogleAccountInput
+    }
+    
+    input GoogleAccountInput {
+        email: String
+        name: String
+        photo: String
+        googleId: ID
     }
     
     type newUser {

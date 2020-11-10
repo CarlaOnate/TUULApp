@@ -6,11 +6,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import App from './pages/App'
 import Home from './pages/Home'
+import {ApolloProvider, InMemoryCache, createHttpLink, ApolloClient} from "@apollo/client";
 
 const Stack = createStackNavigator();
+const cache = new InMemoryCache();
+const link = createHttpLink({
+    uri: 'http://localhost:4000/graphql',
+});
+const client = new ApolloClient({link, cache})
 
 const Navigation = () => {
     return (
+    <ApolloProvider client={client}>
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen
@@ -21,6 +28,7 @@ const Navigation = () => {
                 <Stack.Screen name="Home" component={Home} />
             </Stack.Navigator>
         </NavigationContainer>
+    </ApolloProvider>
     );
 };
 

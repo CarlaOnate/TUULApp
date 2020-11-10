@@ -21,24 +21,79 @@ import {
   Header,
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-import userContext from '../Contexts/userContext'
 
+
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
+import userContext from '../Contexts/userContext'
+import { gql, useMutation, useLazyQuery } from '@apollo/client';
+
+//check user query
+const CHECK_USER = gql`
+    query checkUserLogin($email: String){
+      checkUserLogin(email: $email)
+    }
+`
+
+//login user query
+const LOGIN_USER = gql`
+  query loginUser($email: String) {
+    loginUser(email: $email) {
+      name
+    }
+  }
+`;
+
+//create user mutation
+const CREATE_USER = gql`
+  mutation createUser($input: GoogleUserInput!) {
+    createUser(input: $input) {
+      name
+    }
+  }
+`;
 
 
 const App = ({navigation}) => {
-  const [openFacebook, setOpenFacebook] = useState(false)
+  const [error, setError] = useState()
+
   const context = useContext(userContext)
+  const [logUser, {data: user, error: userError}] = useLazyQuery(LOGIN_USER)
+  const [createUser, {data: newUser, error: createError}] = useMutation(CREATE_USER)
+  const [checkUser, {data: checkedUser, error: checkError}] = useLazyQuery(CHECK_USER)
+
+  if(userError || createError || checkError){
+    setError(userError ? userError.message : createError ? createError.message : checkError.message)
+  }
 
   GoogleSignin.configure();
 
   const signInGoogle = async () => {
     try {
+
       await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo)
-      context.setUser({...userInfo.user})
+      const {idToken, user: {email, id: googleId, photo, name}} = await GoogleSignin.signIn();
+
+      await checkUser({variables: email})
+      if(checkedUser){
+        await logUser({variables: {
+          email
+        }})
+      } else {
+        await createUser({variables: {
+          input: {
+            idToken,
+            googleAccount: {
+              email,
+              name,
+              photo,
+              googleId
+            }
+          }
+          }})
+      }
+      context.setUser(checkUser ? user : newUser)
       navigation.navigate('Home')
+
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -46,13 +101,13 @@ const App = ({navigation}) => {
         // operation (f.e. sign in) is in progress already
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
+        setError('Google Play Services no están disponibles')
       } else {
         // some other error happened
+        setError('Hubo un error')
       }
     }
   };
-
-  // console.log('userIfno', userInfo)
 
 
   return (
@@ -73,6 +128,7 @@ const App = ({navigation}) => {
                   onPress={signInGoogle}
               />
             </View>
+            {error && (<Text>{error}</Text>)}
           </View>
         </ScrollView>
       </SafeAreaView>

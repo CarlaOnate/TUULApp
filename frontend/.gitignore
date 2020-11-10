@@ -34,6 +34,7 @@ google-services.json
 gradle.properties
 tuul.keystore
 debug.keystore
+#Este la valio
 strings.xml
 
 # node.js

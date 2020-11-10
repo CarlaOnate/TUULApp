@@ -1,13 +1,10 @@
 const {gql} = require('apollo-server-express')
 
-const queries = gql`
-#    type Query {
-#        getUser(id: ID!): String
-#    }
-
-#    User query for testing facebook auth
+const queries = gql`    
 type Query {
-        currentUser: User
+        currentUser: newUser
+        checkUserLogin(email: String): Boolean
+        loginUser(email: String): newUser
     }
 `
 
