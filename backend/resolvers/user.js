@@ -1,53 +1,64 @@
-const {gql} = require('apollo-server-express')
 const User = require('../models/User')
 
 const user = {
 
     Mutation: {
 
-        createUser: async (_, {input}, ctx) => {
+        loginUser: async (_, {input}, ctx) => {
+            //See if user exists if not then create, store user in ctx and return user
             console.log('createUser', input)
-            const {email, googleAccount} = input
-            try {
-                const newUser = await User.create({email, googleAccount})
-                console.log('createUser', newUser)
-                return newUser
-            } catch (err) {
-                throw new Error(err)
+            const {type, idToken, googleAccount: {email, name, photo, googleId}} = input
+
+            const googleLogin = async () => {
+                console.log('inside googleLogin')
+                try {
+                    const user = await User.find({email})
+                    console.log('user', user)
+                    if(user.length === 0){
+                        //User does not exists in DB
+                        const newUser = await User.create({name, email, profilePhoto: photo, googleAccount: {idToken, googleId: googleId}})
+                        console.log('newUser', newUser)
+                        ctx.user = newUser
+                    } else {
+                        ctx.user = user[0]
+                    }
+                } catch (err) {
+                    throw new Error(err)
+                }
+            }
+
+            //Run function for each social media login strategy
+            switch (type){
+                case 'google':
+                    console.log('running google')
+                    await googleLogin()
+                break
+                default:
+                    throw new Error('Incorrect type provided in mutation argument')
+            }
+
+            return {
+                id: ctx.user.id,
+                name: ctx.user.name,
+                lastname: ctx.user.lastname,
+                profilePhoto: ctx.user.profilePhoto
             }
         }
     },
 
     Query: {
 
-        currentUser: (parent, args, context, info) => {
-            if(context.user){
-                return context.user
+        currentUser: (parent, args, ctx, info) => {
+            if(ctx.user){
+                const {id, name, lastname, profilePhoto} = ctx.user
+                return {
+                    id,
+                    name,
+                    lastname,
+                    profilePhoto
+                }
             }
             throw new Error('not_logged')
-        },
-
-        checkUserLogin: async (parent, {email}, context, info) => {
-            console.log('checkuser', email)
-            try{
-                const user = await User.find({email})
-                console.log('foundUser', user)
-                return !user.length === 0;
-            } catch(err) {
-                throw new Error(err)
-            }
-        },
-
-        loginUser: async (_, {email}, ctx) => {
-            console.log('loginUser', email)
-            try {
-                const user = await User.find({email})
-                ctx.user = user
-                console.log('loginUser', user)
-                return user
-            } catch (err) {
-                throw new Error(err)
-            }
         },
 
     }

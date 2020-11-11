@@ -13,6 +13,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         default: '',
+        unique: true
     },
     birthdate: String,
     googleAccount: {},
