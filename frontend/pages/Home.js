@@ -22,10 +22,11 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import userContext from "../Contexts/userContext";
 
+
 const GET_USER = gql`
     query get{
         currentUser{
-            id
+            name
         }
     }
 `
@@ -33,6 +34,9 @@ const GET_USER = gql`
 const Home = () => {
     const context = useContext(userContext)
     console.log('context in home', context)
+    const {data, loading, error} = useQuery(GET_USER)
+
+    if(error) return <Text>Algo saliío mal</Text>
 
     return (
         <>
@@ -45,6 +49,7 @@ const Home = () => {
                     <View style={styles.body}>
                         <Text>YA ESTAS EN EL HOME! YA TE LOGGEASTE</Text>
                         <Text>{context.user.name}</Text>
+                        {data && <Text>{data.currentUser}</Text>}
                     </View>
                 </ScrollView>
             </SafeAreaView>

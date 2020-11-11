@@ -23,31 +23,18 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin'
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 import userContext from '../Contexts/userContext'
-import { gql, useMutation, useLazyQuery } from '@apollo/client';
-
-//check user query
-const CHECK_USER = gql`
-    query checkUserLogin($email: String){
-      checkUserLogin(email: $email)
-    }
-`
-
-//login user query
-const LOGIN_USER = gql`
-  query loginUser($email: String) {
-    loginUser(email: $email) {
-      name
-    }
-  }
-`;
+import { gql, useMutation } from '@apollo/client';
 
 //create user mutation
-const CREATE_USER = gql`
-  mutation createUser($input: GoogleUserInput!) {
-    createUser(input: $input) {
-      name
+const LOGIN_USER = gql`
+  mutation loginUser($input: GoogleUserInput!) {
+    loginUser(input: $input) {
+      id,
+      name,
+      lastname,
+      profilePhoto
     }
   }
 `;
@@ -55,56 +42,60 @@ const CREATE_USER = gql`
 
 const App = ({navigation}) => {
   const [error, setError] = useState()
+  const [googleLoading, setGoogleLoading] = useState(false)
 
   const context = useContext(userContext)
-  const [logUser, {data: user, error: userError}] = useLazyQuery(LOGIN_USER)
-  const [createUser, {data: newUser, error: createError}] = useMutation(CREATE_USER)
-  const [checkUser, {data: checkedUser, error: checkError}] = useLazyQuery(CHECK_USER)
-
-  if(userError || createError || checkError){
-    setError(userError ? userError.message : createError ? createError.message : checkError.message)
-  }
+  const [loginUser, {data, error: userError}] = useMutation(LOGIN_USER)
 
   GoogleSignin.configure();
 
+
   const signInGoogle = async () => {
     try {
+      error && setError(userError.message)
+      setGoogleLoading(false)
 
       await GoogleSignin.hasPlayServices();
       const {idToken, user: {email, id: googleId, photo, name}} = await GoogleSignin.signIn();
 
-      await checkUser({variables: email})
-      if(checkedUser){
-        await logUser({variables: {
-          email
-        }})
-      } else {
-        await createUser({variables: {
-          input: {
-            idToken,
-            googleAccount: {
-              email,
-              name,
-              photo,
-              googleId
-            }
+      console.log(email, name)
+
+      await loginUser({variables: {
+        input: {
+          type: 'google',
+          idToken,
+          googleAccount: {
+            email,
+            name,
+            photo,
+            googleId
           }
-          }})
+        }
+      }})
+      //Todo: data is undefined for some reason, in localhost 4000 works fine
+      console.log('data', data)
+      if(data){
+        console.log('user', data.loginUser)
+        context.setUser(data.loginUser)
+        navigation.navigate('Home')
       }
-      context.setUser(checkUser ? user : newUser)
-      navigation.navigate('Home')
 
     } catch (error) {
+      console.log(error)
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
+        setGoogleLoading(false)
       } else if (error.code === statusCodes.IN_PROGRESS) {
         // operation (f.e. sign in) is in progress already
+        setGoogleLoading(true)
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
         setError('Google Play Services no están disponibles')
+        setGoogleLoading(false)
       } else {
         // some other error happened
         setError('Hubo un error')
+        setGoogleLoading(false)
       }
     }
   };
@@ -126,7 +117,7 @@ const App = ({navigation}) => {
                   size={GoogleSigninButton.Size.Wide}
                   color={GoogleSigninButton.Color.Dark}
                   onPress={signInGoogle}
-              />
+                  disabled={googleLoading} />
             </View>
             {error && (<Text>{error}</Text>)}
           </View>
