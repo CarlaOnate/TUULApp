@@ -4,23 +4,22 @@ const user = {
 
     Mutation: {
 
-        loginUser: async (_, {input}, ctx) => {
+        loginUser: async (_, {input}, ctx, info) => {
             //See if user exists if not then create, store user in ctx and return user
-            console.log('createUser', input)
+            console.log('loginUser', input)
             const {type, idToken, googleAccount: {email, name, photo, googleId}} = input
 
             const googleLogin = async () => {
-                console.log('inside googleLogin')
                 try {
                     const user = await User.find({email})
-                    console.log('user', user)
+                    // console.log('user', user)
                     if(user.length === 0){
                         //User does not exists in DB
                         const newUser = await User.create({name, email, profilePhoto: photo, googleAccount: {idToken, googleId: googleId}})
-                        console.log('newUser', newUser)
-                        ctx.user = newUser
+                        // console.log('newUser', newUser)
+                        ctx.logged = newUser
                     } else {
-                        ctx.user = user[0]
+                        ctx.logged = user[0]
                     }
                 } catch (err) {
                     throw new Error(err)
@@ -36,12 +35,12 @@ const user = {
                 default:
                     throw new Error('Incorrect type provided in mutation argument')
             }
-
+            console.log('logged', info.logged)
             return {
-                id: ctx.user.id,
-                name: ctx.user.name,
-                lastname: ctx.user.lastname,
-                profilePhoto: ctx.user.profilePhoto
+                id: info.logged.id,
+                name: info.logged.name,
+                lastname: info.logged.lastname,
+                profilePhoto: info.logged.profilePhoto
             }
         }
     },
@@ -49,16 +48,18 @@ const user = {
     Query: {
 
         currentUser: (parent, args, ctx, info) => {
-            if(ctx.user){
-                const {id, name, lastname, profilePhoto} = ctx.user
+            console.log('current user', info.logged)
+            if(info.logged){
+                const {id, name, lastname, profilePhoto} = info.logged
                 return {
                     id,
                     name,
                     lastname,
                     profilePhoto
                 }
+            } else {
+                throw new Error('not_logged')
             }
-            throw new Error('not_logged')
         },
 
     }

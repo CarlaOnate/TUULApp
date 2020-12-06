@@ -24,9 +24,11 @@ import userContext from "../Contexts/userContext";
 
 
 const GET_USER = gql`
-    query get{
+    query getCurrentUser{
         currentUser{
-            name
+            name,
+            id,
+            profilePhoto
         }
     }
 `
@@ -34,9 +36,15 @@ const GET_USER = gql`
 const Home = () => {
     const context = useContext(userContext)
     console.log('context in home', context)
+    //Todo: data is undefined for some reason, in localhost 4000 works fine
     const {data, loading, error} = useQuery(GET_USER)
 
-    if(error) return <Text>Algo saliío mal</Text>
+    if(error) {
+        console.log('error', error)
+        return <Text>Algo salió mal</Text>
+    }
+
+    console.log('currentUser', data)
 
     return (
         <>
@@ -49,7 +57,7 @@ const Home = () => {
                     <View style={styles.body}>
                         <Text>YA ESTAS EN EL HOME! YA TE LOGGEASTE</Text>
                         <Text>{context.user.name}</Text>
-                        {data && <Text>{data.currentUser}</Text>}
+                        {/*{data && <Text>{data.currentUser}</Text>}*/}
                     </View>
                 </ScrollView>
             </SafeAreaView>

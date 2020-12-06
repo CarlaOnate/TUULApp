@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -49,6 +49,16 @@ const App = ({navigation}) => {
 
   GoogleSignin.configure();
 
+  const loginResponse = () => {
+    console.log('loginRes', data)
+    if(data){
+      console.log('user', data.loginUser)
+      context.setUser(data.loginUser)
+      navigation.navigate('Home')
+    }
+  }
+
+  useEffect(loginResponse ,[data, userError])
 
   const signInGoogle = async () => {
     try {
@@ -72,13 +82,6 @@ const App = ({navigation}) => {
           }
         }
       }})
-      //Todo: data is undefined for some reason, in localhost 4000 works fine
-      console.log('data', data)
-      if(data){
-        console.log('user', data.loginUser)
-        context.setUser(data.loginUser)
-        navigation.navigate('Home')
-      }
 
     } catch (error) {
       console.log(error)
@@ -101,6 +104,8 @@ const App = ({navigation}) => {
   };
 
 
+
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -121,6 +126,10 @@ const App = ({navigation}) => {
             </View>
             {error && (<Text>{error}</Text>)}
           </View>
+          <Button
+          title='Dashboard'
+          onPress={() => navigation.navigate('Home')}
+          />
         </ScrollView>
       </SafeAreaView>
     </>

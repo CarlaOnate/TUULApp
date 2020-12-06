@@ -16,7 +16,8 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
 router.get('/google/callback', passport.authenticate('google', {
     successRedirect: 'http://localhost:4000/graphql',
     failureRedirect: 'http://localhost:4000/graphql',
-}), () => console.log('running callback facebook'))
+}), () => console.log('running callback google'))
+
 
 router.get('/user', (req, res) => {
     console.log('userRoute', req.user)
