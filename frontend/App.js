@@ -65,7 +65,7 @@ const App = ({navigation}) => {
           <Header />
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Loggea con Google</Text>
+              <Text style={styles.sectionTitle}>Log In con Google</Text>
               <GoogleSigninButton
                   style={{ width: 192, height: 48 }}
                   size={GoogleSigninButton.Size.Wide}
