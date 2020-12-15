@@ -19,7 +19,7 @@ import {ApolloProvider, InMemoryCache, createHttpLink, ApolloClient, ApolloLink}
 import SocialSignIn from "./src/pages/Social-signin";
 import Dashboard from "./src/pages/Dashboard";
 import { setContext } from "@apollo/client/link/context";
-import userContext from "./Contexts/userContext";
+import userContext from "./src/contexts/userContext";
 
 const Stack = createStackNavigator();
 

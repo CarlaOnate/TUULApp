@@ -20,7 +20,7 @@ import {
     Header,
     Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import userContext from "../../Contexts/userContext";
+import userContext from "../contexts/userContext";
 
 
 const GET_USER = gql`

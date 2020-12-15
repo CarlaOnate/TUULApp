@@ -24,7 +24,7 @@ import {
 
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
-import userContext from '../../Contexts/userContext'
+import userContext from '../contexts/userContext'
 import { gql, useMutation } from '@apollo/client';
 import { setContext } from "apollo-link-context";
 
