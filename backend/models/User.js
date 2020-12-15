@@ -37,7 +37,7 @@ const userSchema = new Schema({
         vet: [{type: Schema.Types.ObjectId, ref: 'Vet'}],
         clinic: [Schema.Types.ObjectId]
     },
-    pets: [Schema.Types.ObjectId],
+    pets: [{type: Schema.Types.ObjectId, ref: 'Pet'}],
     paymentMethods: {}
 }, { timestamps: true })
 
