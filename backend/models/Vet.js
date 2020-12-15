@@ -49,7 +49,7 @@ const vetSchema = new Schema({
         enum: ['DOG, CAT, BIRD, WILD']
     },
     clinic: {
-        type: [Schema.Types.ObjectID]
+        type: [{type: Schema.Types.ObjectID, ref: 'Clinic'}]
     },
     professionalLicence: {type: String},
     zones: {
