@@ -40,8 +40,7 @@ const clinicSchema = new Schema({
         vaccination: {type: String},
         deworming: {type: String}
     },
-    //Missing Appointment ref
-    appointments: [{type: Schema.Types.ObjectId}],
+    appointments: [{type: Schema.Types.ObjectId, ref: 'Appointment'}],
     paymentMethods: {}
 }, { timestamps: true })
 

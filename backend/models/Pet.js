@@ -25,11 +25,12 @@ const petSchema = new Schema({
     },
     anamnesis: String,
     medicalHistory: {
-        //needs ref of Appointment
-        type: [Schema.Types.ObjectID]
+        appointments: {
+            type: [{type: Schema.Types.ObjectID, ref: 'Appointment'}]
+        }
     },
     personalTraits: {
-        //Add enum of available traits.
+        //Todo: Add enum of available traits.
         type: [String],
     }
 }, { timestamps: true })
