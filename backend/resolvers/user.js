@@ -15,6 +15,7 @@ const user = {
                     const user = await User.find({email})
                     //console.log('user', user)
                     if(user.length === 0){
+                        //Todo: Save user lastname, split name and save one in name and other in lastname
                         //User does not exists in DB
                         const newUser = await User.create({name, email, profilePhoto: photo, googleAccount: {idToken, googleId: googleId}})
                         // console.log('newUser', newUser)
@@ -50,15 +51,23 @@ const user = {
 
     Query: {
 
-        currentUser: (parent, args, ctx, info) => {
+        currentUser: async (parent, args, ctx, info) => {
             console.log('current user', ctx)
             if(ctx){
-                const {id} = ctx
+                const {user: id} = ctx
+                const user = await User.findById(id)
+                console.log(user)
                 return {
                     id,
-                    name: '',
-                    lastname: '',
-                    profilePhoto: ''
+                    name: user.name,
+                    lastname: user.lastname,
+                    photo: user.profilePhoto,
+                    email: user.email,
+                    birthdate: user.birthdate,
+                    address: user.address,
+                    favorites: user.favorites,
+                    pets: user.pets,
+                    paymentMethods: user.paymentMethods
                 }
             } else {
                 throw new Error('not_logged')

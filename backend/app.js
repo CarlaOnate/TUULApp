@@ -43,13 +43,9 @@ app.use('/auth', authRoutes)
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req, res }) => {
-        console.log('CTx HEADERS', req.headers)
-        return {
-            user: req.headers.user || ""
-        }
-    },
-    info: {logged: {}}
+    context: ({ req, res }) => ({
+        user: req.headers.user || "",
+    })
 })
 
 //Apollo middleware server

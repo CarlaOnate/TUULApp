@@ -23,8 +23,6 @@ import userContext from "./Contexts/userContext";
 
 const Stack = createStackNavigator();
 
-//Todo: headere user sirve, como pasamos el id del logged user??
-
 const cache = new InMemoryCache();
 
 const httpLink = createHttpLink({
@@ -34,7 +32,6 @@ const httpLink = createHttpLink({
 
 const App = () => {
     const ctx = useContext(userContext)
-    console.log('headers id', ctx.user.id)
 
     const contextLink = setContext((_, { headers }) => {
         return {
