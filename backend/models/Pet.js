@@ -35,6 +35,5 @@ const petSchema = new Schema({
     }
 }, { timestamps: true })
 
-// petSchema.plugin(plm)
 
 module.exports = model('Pet', petSchema);
