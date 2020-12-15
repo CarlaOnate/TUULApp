@@ -20,7 +20,7 @@ import styles from '../styles/social-signin.styles'
 import userContext from '../contexts/userContext'
 import { gql, useMutation } from '@apollo/client';
 
-import GoogleSigninComponent from "../components/auth/Google-singin";
+import GoogleSigninComponent from "../atoms/auth/Google-singin";
 
 //create user mutation
 const LOGIN_USER = gql`
