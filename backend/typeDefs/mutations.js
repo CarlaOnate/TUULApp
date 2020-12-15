@@ -1,14 +1,9 @@
 const {gql} = require("apollo-server-express")
 
-const mutations = gql`
-#    type Mutation {
-#        createUser(input: UserInput!): String
-#    }
-
-#    User mutation for testing facebook auth
+const mutations = gql`    
 type Mutation {
-        logout: Boolean
+    #User Auth
+        loginUser(input: GoogleUserInput): newUser
     }
-
 `
 module.exports = mutations
