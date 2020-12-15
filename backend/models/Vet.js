@@ -68,6 +68,7 @@ const vetSchema = new Schema({
         vaccination: {type: String},
         deworming: {type: String}
     },
+    appointments: [{type: Schema.Types.ObjectID, ref: 'Appointment'}],
     averageScore: {type: String},
     review: {
         type: [Schema.Types.ObjectID]
