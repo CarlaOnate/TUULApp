@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type: String,
         default: ''
     },
+    role: {
+        type: [String],
+        default: ['USER']
+    },
     email: {
         type: String,
         default: '',
@@ -21,9 +25,16 @@ const userSchema = new Schema({
     instagramAccount: {},
     appleAccount: {},
     profilePhoto: {},
-    address: {},
+    address: {
+        street: {type: String},
+        number: {type: String},
+        neighbourhood: {type: String},
+        city: {type: String},
+        state: {type: String},
+        zipCode: {type: String}
+    },
     favorites: {
-        vet: [Schema.Types.ObjectId],
+        vet: [{type: Schema.Types.ObjectId, ref: 'Vet'}],
         clinic: [Schema.Types.ObjectId]
     },
     pets: [Schema.Types.ObjectId],
