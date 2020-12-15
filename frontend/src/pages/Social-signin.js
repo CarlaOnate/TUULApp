@@ -24,8 +24,10 @@ import {
 
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
-import userContext from '../Contexts/userContext'
+import userContext from '../../Contexts/userContext'
 import { gql, useMutation } from '@apollo/client';
+import { setContext } from "apollo-link-context";
+
 
 //create user mutation
 const LOGIN_USER = gql`
@@ -44,6 +46,7 @@ const SocialSignIn = ({navigation}) => {
     const [error, setError] = useState()
     const [googleLoading, setGoogleLoading] = useState(false)
 
+
     const context = useContext(userContext)
     const [loginUser, {data, error: userError}] = useMutation(LOGIN_USER)
 
@@ -54,7 +57,7 @@ const SocialSignIn = ({navigation}) => {
         if(data){
             console.log('user', data.loginUser)
             context.setUser(data.loginUser)
-            navigation.navigate('Home')
+            navigation.navigate('Dashboard')
         }
     }
 
@@ -81,7 +84,7 @@ const SocialSignIn = ({navigation}) => {
                             googleId
                         }
                     }
-                }})
+            }})
 
         } catch (error) {
             console.log(error)
@@ -102,8 +105,6 @@ const SocialSignIn = ({navigation}) => {
             }
         }
     };
-
-
 
 
     return (
@@ -128,7 +129,7 @@ const SocialSignIn = ({navigation}) => {
                     </View>
                     <Button
                         title='Dashboard'
-                        onPress={() => navigation.navigate('Home')}
+                        onPress={() => navigation.navigate('Dashboard')}
                     />
                 </ScrollView>
             </SafeAreaView>

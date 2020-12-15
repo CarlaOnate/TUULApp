@@ -20,15 +20,13 @@ import {
     Header,
     Colors,
 } from 'react-native/Libraries/NewAppScreen';
-import userContext from "../Contexts/userContext";
+import userContext from "../../Contexts/userContext";
 
 
 const GET_USER = gql`
     query getCurrentUser{
-        currentUser{
-            name,
-            id,
-            profilePhoto
+        currentUser {
+            id
         }
     }
 `
@@ -36,7 +34,6 @@ const GET_USER = gql`
 const Home = () => {
     const context = useContext(userContext)
     console.log('context in home', context)
-    //Todo: data is undefined for some reason, in localhost 4000 works fine
     const {data, loading, error} = useQuery(GET_USER)
 
     if(error) {
