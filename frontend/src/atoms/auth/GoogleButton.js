@@ -9,7 +9,6 @@
 import React, {useState, useEffect} from 'react';
 import {
     View,
-    Text,
 } from 'react-native';
 import styles from '../../styles/social-signin.styles'
 
@@ -26,10 +25,8 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
     GoogleSignin.configure();
 
     const loginResponse = () => {
-        console.log('loginRes', data)
         if(data){
-            console.log('user', data.loginUser)
-            context.setUser(data.loginUser)
+            context.setUser(JSON.parse(data.loginUser)[0])
             navigation.navigate('Dashboard')
         }
     }
@@ -57,7 +54,7 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
                             googleId
                         }
                     }
-                }})
+            }})
 
         } catch (error) {
             console.log(error)

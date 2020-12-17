@@ -21,12 +21,7 @@ import GoogleButton from "../atoms/auth/GoogleButton";
 //create user mutation
 const LOGIN_USER = gql`
     mutation loginUser($input: GoogleUserInput!) {
-        loginUser(input: $input) {
-            id,
-            name,
-            lastname,
-            profilePhoto
-        }
+        loginUser(input: $input)
     }
 `;
 

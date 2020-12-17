@@ -3,42 +3,31 @@
  * @flow strict-local
  */
 
-
-
-import React, {useContext} from 'react';
-import { gql, useQuery } from '@apollo/client';
+import React, {useContext, useState, useEffect} from 'react';
 import {
     SafeAreaView,
-    StyleSheet,
     ScrollView,
     View,
-    Text,
     StatusBar,
 } from 'react-native';
 import styles from '../styles/dashboard.styles'
+import CardAtom from "../atoms/Dashboard/CardAtom";
+import ModalMolecule from '../molecules/ModalMolecule'
+import Map from '../atoms/Modals/Map'
 
 import userContext from "../contexts/userContext";
 
-
-const GET_USER = gql`
-    query getCurrentUser{
-        currentUser {
-            id
-        }
-    }
-`
-
 const Dashboard = () => {
-    const context = useContext(userContext)
-    console.log('context in home', context)
-    const {data, loading, error} = useQuery(GET_USER)
+    const user = useContext(userContext)
+    console.log('user ctx', user)
+    const [showModal, setShowModal] = useState(false)
 
-    if(error) {
-        console.log('error', error)
-        return <Text>Algo salió mal</Text>
-    }
 
-    console.log('currentUser', data)
+    useEffect(() => {
+        if(!user.address){
+            setShowModal(true)
+        }
+    }, [])
 
     return (
         <>
@@ -47,11 +36,17 @@ const Dashboard = () => {
                 <ScrollView
                     contentInsetAdjustmentBehavior="automatic"
                     style={styles.scrollView}>
-                    <Header />
-                    <View style={styles.body}>
-                        <Text>YA ESTAS EN EL HOME! YA TE LOGGEASTE</Text>
-                        <Text>{context.user.name}</Text>
+                    <View style={styles.dashboardContainer}>
+                        <CardAtom  style={[styles.cardVet]} text={'Vets a Domicilio'} />
+                        <CardAtom style={styles.cardClinic} text={'Vets a as'} />
+                        <CardAtom style={styles.cardPension} text={'Vets a asdf'} />
+                        <CardAtom style={styles.cardVet} text={'Vets a asdf'} />
                     </View>
+                    {showModal && (
+                        <ModalMolecule showState={{show: showModal, set: setShowModal}}>
+                            <Map />
+                        </ModalMolecule>
+                    )}
                 </ScrollView>
             </SafeAreaView>
         </>

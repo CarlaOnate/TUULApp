@@ -19,19 +19,9 @@ const user = {
                         //User does not exists in DB
                         const newUser = await User.create({name, email, profilePhoto: photo, googleAccount: {idToken, googleId: googleId}})
                         // console.log('newUser', newUser)
-                        return {
-                            id: newUser.id,
-                            name: newUser.name,
-                            lastname: newUser.lastname,
-                            profilePhoto: newUser.profilePhoto
-                        }
+                        return JSON.stringify(newUser)
                     } else {
-                        return {
-                            id: user[0].id,
-                            name: user[0].name,
-                            lastname: user[0].lastname,
-                            profilePhoto: user[0].profilePhoto
-                        }
+                        return JSON.stringify(user)
                     }
                 } catch (err) {
                     console.log(err)

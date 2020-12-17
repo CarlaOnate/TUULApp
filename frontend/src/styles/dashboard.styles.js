@@ -1,46 +1,28 @@
 import { StyleSheet } from 'react-native';
-import {Colors} from "react-native/Libraries/NewAppScreen";
 
 export default StyleSheet.create({
-    scrollView: {
-        backgroundColor: Colors.lighter,
+    dashboardContainer: {
+        flex: 1,
+        paddingRight: 10,
+        paddingLeft: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        flexWrap: 'wrap',
     },
-    engine: {
-        position: 'absolute',
-        right: 0,
+    cardVet: {
+        backgroundColor: 'rgb(255, 200, 36)'
     },
-    body: {
-        backgroundColor: Colors.white,
+    cardClinic: {
+        backgroundColor: 'rgb(150, 34, 36)'
     },
-    sectionContainer: {
-        marginTop: 32,
-        paddingHorizontal: 24,
+    cardPension: {
+        backgroundColor: 'rgb(123, 344, 76)'
     },
-    sectionTitle: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.black,
-    },
-    sectionDescription: {
-        marginTop: 8,
-        fontSize: 18,
-        fontWeight: '400',
-        color: Colors.dark,
-    },
-    highlight: {
-        fontWeight: '700',
-    },
-    footer: {
-        color: Colors.dark,
-        fontSize: 12,
-        fontWeight: '600',
-        padding: 4,
-        paddingRight: 12,
-        textAlign: 'right',
-    },
-    webView: {
-        height: 600,
-        width: 400
+    card: {
+        flexGrow: 1,
+        width: 150,
+        height: 100,
+        margin: 10,
     }
 });
 
