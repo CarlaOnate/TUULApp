@@ -11,24 +11,23 @@ import 'react-native-gesture-handler';
 
 import * as React from 'react';
 import {useContext} from 'react'
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Dashboard from "../pages/Dashboard";
+import Signup from "../pages/Signup";
+import NavigationHeader from '../atoms/NavigationHeader'
 
 import {ApolloProvider, InMemoryCache, createHttpLink, ApolloClient, ApolloLink} from "@apollo/client";
-import SocialSignIn from "../organisms/Social-signin";
-import Dashboard from "../organisms/Dashboard";
 import { setContext } from "@apollo/client/link/context";
 import userContext from "../contexts/userContext";
 
 const Stack = createStackNavigator();
-
 const cache = new InMemoryCache();
-
 const httpLink = createHttpLink({
     uri: 'http://localhost:4000/graphql',
 })
-
 
 const App = () => {
     const ctx = useContext(userContext)
@@ -52,11 +51,17 @@ const App = () => {
     return (
       <ApolloProvider client={client}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{}}
+          >
             <Stack.Screen
                 name="Login"
-                component={SocialSignIn}
-                options={{ title: 'Welcome' }}
+                component={Signup}
+                options={{
+                    headerTitle: props => <NavigationHeader {...props}/>,
+                    headerStyle: {
+                        backgroundColor: 'rgb(76, 156, 236)'
+                }}}
             />
             <Stack.Screen name="Dashboard" component={Dashboard} />
           </Stack.Navigator>
