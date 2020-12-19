@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string><We need the user's location in order to provide vet services ...../string>
 	<key>CFBundleDisplayName</key>
 	<string>frontend</string>
 	<key>CFBundleExecutable</key>

@@ -7,8 +7,6 @@ buildscript {
         compileSdkVersion = 28
         targetSdkVersion = 28
         googlePlayServicesAuthVersion = "16.0.1" // <--- use this version or newer
-        playServicesVersion = "17.0.0" // or find latest version
-        androidMapsUtilsVersion = "2.2.0"
 
     }
     repositories {
@@ -40,14 +38,4 @@ allprojects {
         jcenter()
         maven { url 'https://www.jitpack.io' }
     }
-}
-
-ext {
-    buildToolsVersion = "28.0.3"
-    minSdkVersion = 16
-    compileSdkVersion = 28
-    targetSdkVersion = 28
-    googlePlayServicesAuthVersion = "16.0.1" // <--- use this version or newer
-    playServicesVersion = "17.0.0" // or find latest version
-    androidMapsUtilsVersion = "2.2.0"
 }
