@@ -16,6 +16,7 @@ export default StyleSheet.create({
     },
     modalView: {
         width: '100%',
+        height: 400,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,

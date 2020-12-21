@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F5FCFF"
     },
     container: {
-        height: 300,
+        height: '70%',
         width: 300,
         backgroundColor: "tomato"
     },
@@ -31,13 +31,24 @@ const styles = StyleSheet.create({
 const Map = () => {
     useEffect(() => {
         MapboxGL.setTelemetryEnabled(false);
+        MapboxGL.locationManager.start();
+
+        return (): void => {
+            MapboxGL.locationManager.stop();
+        };
     }, [])
     console.log('mapbox', MapboxGL)
+
 
     return (
         <View style={styles.page}>
             <View style={styles.container}>
-                <MapboxGL.MapView style={styles.map} />
+                <MapboxGL.MapView style={styles.map}>
+                    <MapboxGL.Camera followZoomLevel={5} followUserLocation={true} followUserMode={'normal'}/>
+                    <MapboxGL.UserLocation
+                        visible={true}
+                       showsUserHeadingIndicator={true}/>
+                </MapboxGL.MapView>
             </View>
         </View>
     );
