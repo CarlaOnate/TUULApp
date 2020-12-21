@@ -1,18 +1,39 @@
 import React, {useEffect} from 'react';
 import {
-    View
+    View,
+    StyleSheet
 } from 'react-native'
 import MapboxGL from "@react-native-mapbox-gl/maps";
 
-MapboxGL.setAccessToken("<YOUR_ACCESSTOKEN>");
-MapboxGL.setConnected(true);
+//Default public token
+//Todo: Change to our token
+MapboxGL.setAccessToken("pk.eyJ1IjoiY2FybGFvIiwiYSI6ImNrNjgyb294aDAwb2Mzbm8ydHhncmJvbWgifQ.07bP1nWOumai4v2tmKYzHA\n");
 
-useEffect(() => {
-    MapboxGL.setTelemetryEnabled(false);
-}, [])
+
+const styles = StyleSheet.create({
+    page: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#F5FCFF"
+    },
+    container: {
+        height: 300,
+        width: 300,
+        backgroundColor: "tomato"
+    },
+    map: {
+        flex: 1
+    }
+});
 
 
 const Map = () => {
+    useEffect(() => {
+        MapboxGL.setTelemetryEnabled(false);
+    }, [])
+    console.log('mapbox', MapboxGL)
+
     return (
         <View style={styles.page}>
             <View style={styles.container}>
