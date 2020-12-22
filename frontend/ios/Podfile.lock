@@ -331,6 +331,8 @@ PODS:
     - FBSDKCoreKit (~> 5.8.0)
     - FBSDKLoginKit (~> 5.8.0)
     - React
+  - react-native-geolocation-service (5.1.1):
+    - React
   - react-native-mapbox-gl (8.0.0-beta1):
     - Mapbox-iOS-SDK (~> 5.7)
     - React
@@ -453,6 +455,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-facebook-login (from `../node_modules/react-native-facebook-login`)
+  - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -541,6 +544,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-facebook-login:
     :path: "../node_modules/react-native-facebook-login"
+  react-native-geolocation-service:
+    :path: "../node_modules/react-native-geolocation-service"
   react-native-mapbox-gl:
     :path: "../node_modules/@react-native-mapbox-gl/maps"
   react-native-maps:
@@ -628,6 +633,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 1540d1c01bb493ae3124ed83351b1b6a155db7da
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-facebook-login: ce3028af5c5ed1535337f0b0abf7f354afa91a2a
+  react-native-geolocation-service: f33626f1ae12381ca2ae60f98b2f5edd676bf95a
   react-native-mapbox-gl: 9e43a6b25de6159f0b41f8dcffe02ebecf6970de
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937

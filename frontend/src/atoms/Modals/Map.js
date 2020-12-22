@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     StyleSheet
 } from 'react-native'
 import MapboxGL from "@react-native-mapbox-gl/maps";
+import Geolocation from 'react-native-geolocation-service';
 
 //Default public token
 //Todo: Change to our token
@@ -29,14 +30,31 @@ const styles = StyleSheet.create({
 
 
 const Map = () => {
-    useEffect(() => {
-        MapboxGL.setTelemetryEnabled(false);
-        MapboxGL.locationManager.start();
+    const [userLocation, setUserLocation] = useState()
 
-        return (): void => {
-            MapboxGL.locationManager.stop();
-        };
+    useEffect(async () => {
+        MapboxGL.setTelemetryEnabled(false);
+
+        const hasLocationPermission = await Geolocation.requestAuthorization('whenInUse')
+        console.log('locationPermission', hasLocationPermission)
+        if (hasLocationPermission === 'granted') {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    console.log(position);
+                    setUserLocation(position)
+                },
+                (error) => {
+                    // See error code charts below.
+                    console.log(error.code, error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );
+        }
+
     }, [])
+
+
+
     console.log('mapbox', MapboxGL)
 
 
@@ -44,10 +62,7 @@ const Map = () => {
         <View style={styles.page}>
             <View style={styles.container}>
                 <MapboxGL.MapView style={styles.map}>
-                    <MapboxGL.Camera followZoomLevel={5} followUserLocation={true} followUserMode={'normal'}/>
-                    <MapboxGL.UserLocation
-                        visible={true}
-                       showsUserHeadingIndicator={true}/>
+                    <MapboxGL.Camera followZoomLevel={5} centerCoordinate={userLocation}/>
                 </MapboxGL.MapView>
             </View>
         </View>
