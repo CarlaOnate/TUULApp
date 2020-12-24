@@ -1,25 +1,20 @@
 const {Schema, model} = require('mongoose')
 // const plm = require('passport-local-mongoose')
 
-const userSchema = new Schema({
+const clinicSchema = new Schema({
     name: {
         type: String,
         default: ''
     },
-    lastname: {
+    slogan: {
         type: String,
         default: ''
-    },
-    role: {
-        type: [String],
-        default: ['USER']
     },
     email: {
         type: String,
         default: '',
         unique: true
     },
-    birthdate: String,
     googleAccount: {},
     facebookAccount: {},
     instagramAccount: {},
@@ -33,14 +28,22 @@ const userSchema = new Schema({
         state: {type: String},
         zipCode: {type: String}
     },
-    favorites: {
-        vet: [{type: Schema.Types.ObjectId, ref: 'Vet'}],
-        clinic: [{type: Schema.Types.ObjectId, ref: 'Clinic'}]
+    vets: [{type: Schema.Types.ObjectId, ref: 'Vet'}],
+    openHours: [String],
+    services: {
+        type: [String],
+        enum: ['APPOINTMENT', 'EMERGENCY', 'VACCINATION', 'DEWORMING', 'PET-GROOMING', 'PENSION', 'DOG-WALK']
     },
-    pets: [{type: Schema.Types.ObjectId, ref: 'Pet'}],
+    costs: {
+        appointment: {type: String},
+        emergency: {type: String},
+        vaccination: {type: String},
+        deworming: {type: String}
+    },
+    appointments: [{type: Schema.Types.ObjectId, ref: 'Appointment'}],
     paymentMethods: {}
 }, { timestamps: true })
 
-// userSchema.plugin(plm)
+// clinicSchema.plugin(plm)
 
-module.exports = model('User', userSchema);
+module.exports = model('Clinic', clinicSchema);

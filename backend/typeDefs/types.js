@@ -23,12 +23,18 @@ const types = gql`
         profilePhoto: String
     }
     
-#    User type for testing facebook auth
     type User {
+#        Para mandar como string usar JSON.stringify() - maybe luego cambiamos a hacer los tipos de cada uno.
         id: ID
         name: String
         lastname: String
+        email: String
         birthdate: String
+        photo: String
+        address: String
+        favorites: String
+        pets: String
+        paymentMethods: String
     }
 `
 

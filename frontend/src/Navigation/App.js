@@ -10,24 +10,46 @@
 import 'react-native-gesture-handler';
 
 import * as React from 'react';
+import {useContext} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-import {ApolloProvider, InMemoryCache, createHttpLink, ApolloClient} from "@apollo/client";
-import SocialSignIn from "./pages/Social-signin";
-import Dashboard from "./pages/Dashboard";
-
+import {ApolloProvider, InMemoryCache, createHttpLink, ApolloClient, ApolloLink} from "@apollo/client";
+import SocialSignIn from "../organisms/Social-signin";
+import Dashboard from "../organisms/Dashboard";
+import { setContext } from "@apollo/client/link/context";
+import userContext from "../contexts/userContext";
 
 const Stack = createStackNavigator();
+
 const cache = new InMemoryCache();
-const link = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
-});
-const client = new ApolloClient({link, cache})
+
+const httpLink = createHttpLink({
+    uri: 'http://localhost:4000/graphql',
+})
+
 
 const App = () => {
-  return (
+    const ctx = useContext(userContext)
+
+    const contextLink = setContext((_, { headers }) => {
+        return {
+            headers: {
+                ...headers,
+                user: ctx.user.id
+            }
+        }
+    })
+
+    const client = new ApolloClient({
+        link: contextLink.concat(httpLink),
+        cache,
+        credentials: 'same-origin'
+    })
+
+
+    return (
       <ApolloProvider client={client}>
         <NavigationContainer>
           <Stack.Navigator>
