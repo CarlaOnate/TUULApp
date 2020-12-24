@@ -32,30 +32,28 @@ const styles = StyleSheet.create({
 const Map = () => {
     const [userLocation, setUserLocation] = useState()
 
-    useEffect(async () => {
+    useEffect(() => {
         MapboxGL.setTelemetryEnabled(false);
-
-        const hasLocationPermission = await Geolocation.requestAuthorization('whenInUse')
-        console.log('locationPermission', hasLocationPermission)
-        if (hasLocationPermission === 'granted') {
-            Geolocation.getCurrentPosition(
-                (position) => {
-                    console.log(position);
-                    setUserLocation(position)
-                },
-                (error) => {
-                    // See error code charts below.
-                    console.log(error.code, error.message);
-                },
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-            );
+        const geolocationPermissions = async () => {
+            const hasLocationPermission = await Geolocation.requestAuthorization('whenInUse')
+            console.log('locationPermission', hasLocationPermission)
+            if (hasLocationPermission === 'granted') {
+                Geolocation.getCurrentPosition(
+                    (position) => {
+                        console.log(position);
+                        setUserLocation(position)
+                    },
+                    (error) => {
+                        // See error code charts below.
+                        console.log(error.code, error.message);
+                    },
+                    { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                );
+            }
         }
-
+        geolocationPermissions()
     }, [])
-
-
-
-    console.log('mapbox', MapboxGL)
+    console.log(userLocation)
 
 
     return (
