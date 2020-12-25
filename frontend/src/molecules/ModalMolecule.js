@@ -11,7 +11,7 @@ import styles from '../styles/modal.styles'
 //Todo: Styles genericos
 
 
-const ModalMolecule = ({showState, children}) => {
+const ModalMolecule = ({showState, header, children}) => {
     const {show, set} = showState
     return (
         <Modal
@@ -20,7 +20,8 @@ const ModalMolecule = ({showState, children}) => {
         visible={show}>
             <View style={[styles.bottomView, styles.modal]}>
                 <View style={styles.modalView}>
-                    <View style={styles.closeContainer}>
+                    <View style={styles.headerContainer}>
+                        <TextAtom>{header}</TextAtom>
                         <TouchableOpacity
                             style={styles.closeButton}
                             onPress={() => {set(!show);}}>

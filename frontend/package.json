@@ -22,6 +22,7 @@
     "react-native-facebook-login": "^1.6.2",
     "react-native-geolocation-service": "^5.1.1",
     "react-native-gesture-handler": "^1.8.0",
+    "react-native-google-places-autocomplete": "^2.1.2",
     "react-native-google-signin": "^2.1.1",
     "react-native-maps": "0.27.1",
     "react-native-reanimated": "^1.13.1",
@@ -37,6 +38,7 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.58.0",
+    "react-native-dotenv": "^2.4.3",
     "react-test-renderer": "16.11.0"
   },
   "jest": {

@@ -15,7 +15,7 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        width: '100%',
+        width: '110%',
         height: 400,
         margin: 20,
         backgroundColor: "white",
@@ -31,10 +31,20 @@ export default StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5
     },
-    closeContainer: {
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         width: '100%',
+        margin: 10,
     } ,
     closeButton: {
         alignSelf: 'flex-end'
+    },
+    addressModal: {
+        backgroundColor: '#e1761e',
+    },
+    autocompleteInput: {
+        width: 300,
+        backgroundColor: '#000000'
     }
 });

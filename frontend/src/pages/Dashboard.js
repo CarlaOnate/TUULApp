@@ -13,21 +13,21 @@ import {
 import styles from '../styles/dashboard.styles'
 import CardAtom from "../atoms/Dashboard/CardAtom";
 import ModalMolecule from '../molecules/ModalMolecule'
-import Map from '../atoms/Modals/Map'
 
 import userContext from "../contexts/userContext";
+import AddressModal from "../organisms/AddressModal";
 
 const Dashboard = () => {
+    const modalHeader = '¿Cuál es tu dirección?'
     const user = useContext(userContext)
-    console.log('user ctx', user)
     const [showModal, setShowModal] = useState(false)
-
 
     useEffect(() => {
         if(!user.address){
             setShowModal(true)
         }
     }, [])
+
 
     return (
         <>
@@ -43,8 +43,8 @@ const Dashboard = () => {
                         <CardAtom style={styles.cardVet} text={'Vets a asdf'} />
                     </View>
                     {showModal && (
-                        <ModalMolecule showState={{show: showModal, set: setShowModal}}>
-                            <Map />
+                        <ModalMolecule header={modalHeader} showState={{show: showModal, set: setShowModal}}>
+                            <AddressModal />
                         </ModalMolecule>
                     )}
                 </ScrollView>
