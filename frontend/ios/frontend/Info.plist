@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is needed to provide vet services to the clients residence.</string>
 	<key>CFBundleDisplayName</key>
 	<string>frontend</string>
 	<key>CFBundleExecutable</key>

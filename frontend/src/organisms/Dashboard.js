@@ -14,46 +14,22 @@ import {
   StatusBar,
 } from 'react-native';
 
-<<<<<<< HEAD:frontend/pages/Dashboard.js
 import {Header, Colors} from 'react-native/Libraries/NewAppScreen';
-import userContext from '../Contexts/userContext';
-
-const GET_USER = gql`
-  query getCurrentUser {
-    currentUser {
-      name
-      id
-      profilePhoto
-=======
-import {
-    Header,
-    Colors,
-} from 'react-native/Libraries/NewAppScreen';
-import userContext from "../contexts/userContext";
-
+import userContext from '../contexts/userContext';
 
 const GET_USER = gql`
     query getCurrentUser{
         currentUser {
             id
         }
->>>>>>> 1c0fa092b01767c32cadf5916c560f241d6212ca:frontend/src/organisms/Dashboard.js
     }
   }
 `;
 
 const Home = () => {
-<<<<<<< HEAD:frontend/pages/Dashboard.js
   const context = useContext(userContext);
   console.log('context in home', context);
-  //Todo: data is undefined for some reason, in localhost 4000 works fine
-  //eslint-disable-next-line no-unused-vars
   const {data, loading, error} = useQuery(GET_USER);
-=======
-    const context = useContext(userContext)
-    console.log('context in home', context)
-    const {data, loading, error} = useQuery(GET_USER)
->>>>>>> 1c0fa092b01767c32cadf5916c560f241d6212ca:frontend/src/organisms/Dashboard.js
 
   if (error) {
     console.log('error', error);

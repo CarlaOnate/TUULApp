@@ -9,7 +9,6 @@
 import React, {useState, useEffect} from 'react';
 import {
     View,
-    Text,
 } from 'react-native';
 import styles from '../../styles/social-signin.styles'
 
@@ -17,7 +16,7 @@ import styles from '../../styles/social-signin.styles'
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
-const GoogleSigninComponent = ({navigation, errorState, context, loginUser, loginUserResponse}) => {
+const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResponse}) => {
     const {data, userError} = loginUserResponse
     const {error, setError} = errorState
 
@@ -26,10 +25,8 @@ const GoogleSigninComponent = ({navigation, errorState, context, loginUser, logi
     GoogleSignin.configure();
 
     const loginResponse = () => {
-        console.log('loginRes', data)
         if(data){
-            console.log('user', data.loginUser)
-            context.setUser(data.loginUser)
+            context.setUser(JSON.parse(data.loginUser)[0])
             navigation.navigate('Dashboard')
         }
     }
@@ -57,7 +54,7 @@ const GoogleSigninComponent = ({navigation, errorState, context, loginUser, logi
                             googleId
                         }
                     }
-                }})
+            }})
 
         } catch (error) {
             console.log(error)
@@ -83,7 +80,6 @@ const GoogleSigninComponent = ({navigation, errorState, context, loginUser, logi
     return (
         <>
         <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>Loggea con Google</Text>
             <GoogleSigninButton
                 style={{ width: 192, height: 48 }}
                 size={GoogleSigninButton.Size.Wide}
@@ -96,4 +92,4 @@ const GoogleSigninComponent = ({navigation, errorState, context, loginUser, logi
 };
 
 
-export default GoogleSigninComponent;
+export default GoogleButton;
