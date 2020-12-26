@@ -6,63 +6,73 @@
  * @flow strict-local
  */
 
-
 import 'react-native-gesture-handler';
 
 import * as React from 'react';
-import {useContext} from 'react'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {useContext} from 'react';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import {ApolloProvider, InMemoryCache, createHttpLink, ApolloClient, ApolloLink} from "@apollo/client";
-import SocialSignIn from "../organisms/Social-signin";
-import Dashboard from "../organisms/Dashboard";
-import { setContext } from "@apollo/client/link/context";
-import userContext from "../contexts/userContext";
+import Dashboard from '../pages/Dashboard';
+import Vets from '../pages/Vets';
+import Signup from '../pages/Signup';
+import NavigationHeader from '../atoms/NavigationHeader';
+
+import {
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+  ApolloClient,
+  ApolloLink,
+} from '@apollo/client';
+import {setContext} from '@apollo/client/link/context';
+import userContext from '../contexts/userContext';
 
 const Stack = createStackNavigator();
-
 const cache = new InMemoryCache();
-
 const httpLink = createHttpLink({
-    uri: 'http://localhost:4000/graphql',
-})
-
+  uri: 'http://localhost:4000/graphql',
+});
 
 const App = () => {
-    const ctx = useContext(userContext)
+  const ctx = useContext(userContext);
 
-    const contextLink = setContext((_, { headers }) => {
-        return {
-            headers: {
-                ...headers,
-                user: ctx.user.id
-            }
-        }
-    })
+  const contextLink = setContext((_, {headers}) => {
+    return {
+      headers: {
+        ...headers,
+        user: ctx.user.id,
+      },
+    };
+  });
 
-    const client = new ApolloClient({
-        link: contextLink.concat(httpLink),
-        cache,
-        credentials: 'same-origin'
-    })
+  const client = new ApolloClient({
+    link: contextLink.concat(httpLink),
+    cache,
+    credentials: 'same-origin',
+  });
 
-
-    return (
-      <ApolloProvider client={client}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-                name="Login"
-                component={SocialSignIn}
-                options={{ title: 'Welcome' }}
-            />
-            <Stack.Screen name="Dashboard" component={Dashboard} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ApolloProvider>
+  return (
+    <ApolloProvider client={client}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{}}>
+          <Stack.Screen
+            name="Login"
+            component={Signup}
+            options={{
+              headerTitle: props => <NavigationHeader {...props} />,
+              headerStyle: {
+                backgroundColor: 'rgb(76, 156, 236)',
+              },
+            }}
+          />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="Veterinarios" component={Vets} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ApolloProvider>
   );
 };
 
-export default App
+export default App;
