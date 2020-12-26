@@ -27,6 +27,7 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
     const loginResponse = () => {
         if(data){
             context.setUser(JSON.parse(data.loginUser)[0])
+            console.log('before navigation')
             navigation.navigate('Dashboard')
         }
     }
@@ -34,13 +35,15 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
     useEffect(loginResponse ,[data, userError])
 
     const signInGoogle = async () => {
+        console.log('signin google')
         try {
             error && setError(userError.message)
             setGoogleLoading(false)
 
-            await GoogleSignin.hasPlayServices();
+            const playServices = await GoogleSignin.hasPlayServices();
+            console.log(playServices)
             const {idToken, user: {email, id: googleId, photo, name}} = await GoogleSignin.signIn();
-
+            console.log('google info', email, googleId)
             console.log(email, name)
 
             await loginUser({variables: {
@@ -63,6 +66,7 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
                 setGoogleLoading(false)
             } else if (error.code === statusCodes.IN_PROGRESS) {
                 // operation (f.e. sign in) is in progress already
+                console.log('In-progress')
                 setGoogleLoading(true)
             } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
                 // play services not available or outdated

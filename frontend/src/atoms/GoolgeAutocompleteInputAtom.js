@@ -1,4 +1,5 @@
 import React from 'react';
+import {View } from 'react-native'
 import { gql, useQuery } from '@apollo/client';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import TextAtom from "../atoms/TextAtom";
@@ -16,28 +17,22 @@ const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
     if(loading) return <TextAtom>Spinner...</TextAtom>
     console.log('Google autocomplete')
 
+    const printShit = (e) => {
+        console.log(e)
+    }
+
     return (
-        <GooglePlacesAutocomplete
+            <GooglePlacesAutocomplete
                 placeholder='Search'
                 onPress={(data, details = null) => {
                     // 'details' is provided when fetchDetails = true
                     console.log(data, details);
                 }}
                 query={{
-                    key: data.env,
+                    key: 'YOUR API KEY',
                     language: 'en',
                 }}
-                styles={{
-                    textInputContainer: {
-                        width: '100%',
-                    },
-                    textInput: {
-                        backgroundColor: '#f3f2f3',
-                        borderRadius: 10,
-                        marginTop: 10,
-                    }
-                }}
-        />
+            />
     );
 }
 

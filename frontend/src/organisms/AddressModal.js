@@ -14,11 +14,13 @@ const AddressModal = () => {
     const [coordinates, setCoordinates] = useState({lat: '', lon: ''})
 
     return (
-        <View styles={styles.addressModal}>
+        <View>
                 {step === 0 ? (
                     <>
                         <TextAtom>Tu ubicacion nos permitirá encontrar los veterinarios o clínicas más cercanas.</TextAtom>
-                        <GoogleAutocompleteInputAtom setCoordinates={setCoordinates}/>
+                        <View>
+                            <GoogleAutocompleteInputAtom setCoordinates={setCoordinates}/>
+                        </View>
                     </>
                 ) : (
                     <>
