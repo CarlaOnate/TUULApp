@@ -8,19 +8,19 @@ export default StyleSheet.create({
     alignContent: 'center',
     borderRadius: 10,
     elevation: 8,
-    marginLeft: 20,
-    marginRight: 20,
+    height: 150,
     marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
   },
   InnerText: {
     fontWeight: 'bold',
     fontSize: 20,
     alignSelf: 'flex-start',
-    padding: 35,
+    padding: 20,
     color: 'white',
   },
   Image: {
-    alignSelf: 'flex-end',
     height: 'auto',
   },
 });

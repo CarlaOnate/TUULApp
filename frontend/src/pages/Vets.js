@@ -6,13 +6,12 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {SafeAreaView, ScrollView, View, StatusBar} from 'react-native';
 import styles from '../styles/dashboard.styles';
-import LongButton from '../atoms/db_longButton/db_longButtonAtom';
 import ShortButton from '../atoms/db_shortButton/db_shortButtonAtom';
 import ModalMolecule from '../molecules/ModalMolecule';
 import Map from '../atoms/Modals/Map';
 import userContext from '../contexts/userContext';
 
-const Dashboard = ({navigation}) => {
+const Vets = () => {
   const user = useContext(userContext);
   console.log('user ctx', user);
   const [showModal, setShowModal] = useState(false);
@@ -56,23 +55,7 @@ const Dashboard = ({navigation}) => {
               <ShortButton text={'Estética'} backgroundColor={'#307398'} />
               <ShortButton text={'Paseos'} backgroundColor={'#7CD1EB'} />
             </View>
-            <LongButton
-              text={'Emergencias'}
-              // TODO: ••• Image has height but is not displayable
-              backgroundColor={'#d83910'}
-            />
-            <LongButton
-              text={'Pensión'}
-              // TODO: ••• Image has height but is not displayable
-              backgroundColor={'#E87A30'}
-            />
-            <LongButton
-              text={'Adopciones'}
-              // TODO: ••• Image has height but is not displayable
-              backgroundColor={'#EAB254'}
-            />
           </View>
-          <View />
           {showModal && (
             <ModalMolecule showState={{show: showModal, set: setShowModal}}>
               <Map />
@@ -84,4 +67,4 @@ const Dashboard = ({navigation}) => {
   );
 };
 
-export default Dashboard;
+export default Vets;
