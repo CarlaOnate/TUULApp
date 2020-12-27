@@ -13,7 +13,8 @@ import {useContext} from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Ionicons, MaterialIcons} from '@expo/vector-icons';
 import Dashboard from '../pages/Dashboard';
 import Vets from '../pages/Vets';
 import Signup from '../pages/Signup';
@@ -28,6 +29,8 @@ import {
 } from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 import userContext from '../contexts/userContext';
+
+const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 const cache = new InMemoryCache();
@@ -70,6 +73,22 @@ const App = () => {
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Veterinarios" component={Vets} />
         </Stack.Navigator>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: ({focused, color, size}) => {
+              if (route.name === 'Dashboard') {
+                return (
+                  <MaterialIcons name="dashboard" color={color} size={size} />
+                );
+              }
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'orange',
+            inactiveTintColor: 'blue',
+          }}>
+          <Tab.Screen name="Dashboard" component={Dashboard} />
+        </Tab.Navigator>
       </NavigationContainer>
     </ApolloProvider>
   );
