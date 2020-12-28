@@ -24,7 +24,7 @@ const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
         <GooglePlacesAutocomplete
             placeholder='Search'
             currentLocation={true}
-            currentLocationLabel={'Ubicacion actual'}
+            currentLocationLabel={'Ubicación actual'}
             onPress={(data, details = null) => {
                 // 'details' is provided when fetchDetails = true
                 console.log(data, details);
@@ -39,6 +39,7 @@ const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
                     width: '100%'
                 }
             }}
+            enablePoweredByContainer={true}
         />
     );
 }
