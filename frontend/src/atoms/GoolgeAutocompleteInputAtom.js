@@ -3,6 +3,8 @@ import {View } from 'react-native'
 import { gql, useQuery } from '@apollo/client';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import TextAtom from "../atoms/TextAtom";
+navigator.geolocation = require('react-native-geolocation-service');
+
 
 const GET_ENV_VAR = gql`
     query get_var($variable: String){
@@ -11,6 +13,7 @@ const GET_ENV_VAR = gql`
 `
 
 const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
+
     const {data, loading, error} = useQuery(GET_ENV_VAR, {variables: {variable: 'GOOGLE_API_KEY'}})
 
     if(error) return <TextAtom>Alog salió mal</TextAtom>
@@ -20,7 +23,8 @@ const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
     return (
         <GooglePlacesAutocomplete
             placeholder='Search'
-            // keyboardShouldPersistTaps={'always'}
+            currentLocation={true}
+            currentLocationLabel={'Ubicacion actual'}
             onPress={(data, details = null) => {
                 // 'details' is provided when fetchDetails = true
                 console.log(data, details);
