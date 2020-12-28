@@ -13,13 +13,13 @@ MapboxGL.setAccessToken("pk.eyJ1IjoiY2FybGFvIiwiYSI6ImNrNjgyb294aDAwb2Mzbm8ydHhn
 
 const styles = StyleSheet.create({
     page: {
-        flex: 1,
+        width: 200,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F5FCFF"
     },
     container: {
-        height: '70%',
+        height: 200,
         width: 300,
         backgroundColor: "tomato"
     },
@@ -30,17 +30,17 @@ const styles = StyleSheet.create({
 
 
 const Map = ({coordinates}) => {
-    const [userLocation, setUserLocation] = useState()
 
     useEffect(() => {
         MapboxGL.setTelemetryEnabled(false);
     }, [])
 
-    // const centerMap = async () => {
-    //     await this._map.getPointInView([coordinates.lat, coordinates.lng]);
-    // }
-    //
-    // useEffect(centerMap, [coordinates])
+    useEffect(() => {
+        const center = async () => {
+            await MapboxGL.getPointInView([coordinates.lat, coordinates.lng]);
+        }
+        center()
+    }, [coordinates])
 
 
 
@@ -48,7 +48,8 @@ const Map = ({coordinates}) => {
         <View style={styles.page}>
             <View style={styles.container}>
                 <MapboxGL.MapView style={styles.map}>
-                    <MapboxGL.Camera followZoomLevel={5}/>
+                    <MapboxGL.MarkerView coordinate={[coordinates.lng, coordinates.lat]}/>
+                    <MapboxGL.Camera zoomLevel={15} centerCoordinate={[coordinates.lng, coordinates.lat]}/>
                 </MapboxGL.MapView>
             </View>
         </View>

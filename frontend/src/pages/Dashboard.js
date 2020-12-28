@@ -12,15 +12,11 @@ import {
 } from 'react-native';
 import styles from '../styles/dashboard.styles'
 import CardAtom from "../atoms/Dashboard/CardAtom";
-import ModalMolecule from '../molecules/ModalMolecule'
 
 import userContext from "../contexts/userContext";
 import AddressModal from "../organisms/AddressModal";
-import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
-import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
 
 const Dashboard = () => {
-    const modalHeader = '¿Cuál es tu dirección?'
     const user = useContext(userContext)
     const [showModal, setShowModal] = useState(false)
 
@@ -46,9 +42,7 @@ const Dashboard = () => {
                         <CardAtom style={styles.cardVet} text={'Vets a asdf'} />
                     </View>
                     {showModal && (
-                        <ModalMolecule header={modalHeader} showState={{show: showModal, set: setShowModal}}>
-                            <AddressModal />
-                        </ModalMolecule>
+                        <AddressModal show={showModal} set={setShowModal}/>
                     )}
                 </ScrollView>
             </SafeAreaView>

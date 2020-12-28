@@ -34,7 +34,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        margin: 10,
+        margin: 5,
     } ,
     closeButton: {
         alignSelf: 'flex-end'
