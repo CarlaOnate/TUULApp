@@ -11,12 +11,15 @@ import {
     View,
 } from 'react-native';
 import styles from '../../styles/social-signin.styles'
+import { useNavigation } from '@react-navigation/native';
 
 
 
 import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
-const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResponse}) => {
+const GoogleButton = ({errorState, context, loginUser, loginUserResponse}) => {
+    const navigation = useNavigation()
+
     const {data, userError} = loginUserResponse
     const {error, setError} = errorState
 
@@ -25,9 +28,10 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
     GoogleSignin.configure();
 
     const loginResponse = () => {
+        console.log(data)
         if(data){
             context.setUser(JSON.parse(data.loginUser)[0])
-            console.log('before navigation')
+            console.log('before navigation', navigation)
             navigation.navigate('Dashboard')
         }
     }
@@ -35,16 +39,13 @@ const GoogleButton = ({navigation, errorState, context, loginUser, loginUserResp
     useEffect(loginResponse ,[data, userError])
 
     const signInGoogle = async () => {
-        console.log('signin google')
         try {
             error && setError(userError.message)
             setGoogleLoading(false)
 
-            const playServices = await GoogleSignin.hasPlayServices();
-            console.log(playServices)
+            await GoogleSignin.hasPlayServices();
             const {idToken, user: {email, id: googleId, photo, name}} = await GoogleSignin.signIn();
             console.log('google info', email, googleId)
-            console.log(email, name)
 
             await loginUser({variables: {
                     input: {

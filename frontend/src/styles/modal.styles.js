@@ -29,7 +29,6 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
     },
     headerContainer: {
         flexDirection: 'row',
@@ -40,11 +39,4 @@ export default StyleSheet.create({
     closeButton: {
         alignSelf: 'flex-end'
     },
-    addressModal: {
-        backgroundColor: '#e1761e',
-    },
-    autocompleteInput: {
-        width: 300,
-        backgroundColor: '#000000'
-    }
 });

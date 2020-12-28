@@ -198,7 +198,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.0.0')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.google.firebase:firebase-analytics'
-    compile project(':react-native-facebook-login')
+    implementation project(':react-native-facebook-login')
 
 
 

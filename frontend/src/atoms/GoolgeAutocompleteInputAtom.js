@@ -15,24 +15,27 @@ const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
 
     if(error) return <TextAtom>Alog salió mal</TextAtom>
     if(loading) return <TextAtom>Spinner...</TextAtom>
-    console.log('Google autocomplete')
-
-    const printShit = (e) => {
-        console.log(e)
-    }
+    console.log('Google autocomplete', data)
 
     return (
-            <GooglePlacesAutocomplete
-                placeholder='Search'
-                onPress={(data, details = null) => {
-                    // 'details' is provided when fetchDetails = true
-                    console.log(data, details);
-                }}
-                query={{
-                    key: 'YOUR API KEY',
-                    language: 'en',
-                }}
-            />
+        <GooglePlacesAutocomplete
+            placeholder='Search'
+            // keyboardShouldPersistTaps={'always'}
+            onPress={(data, details = null) => {
+                // 'details' is provided when fetchDetails = true
+                console.log(data, details);
+            }}
+            query={{
+                key: data.env,
+                language: 'es',
+                components: 'country:mx'
+            }}
+            styles={{
+                textInput: {
+                    width: '100%'
+                }
+            }}
+        />
     );
 }
 

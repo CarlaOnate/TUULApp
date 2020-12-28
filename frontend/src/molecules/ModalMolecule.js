@@ -6,6 +6,8 @@ import {
 } from 'react-native';
 import TextAtom from "../atoms/TextAtom";
 import styles from '../styles/modal.styles'
+import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
+import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
 
 
 //Todo: Styles genericos

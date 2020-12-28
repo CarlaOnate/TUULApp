@@ -16,6 +16,8 @@ import ModalMolecule from '../molecules/ModalMolecule'
 
 import userContext from "../contexts/userContext";
 import AddressModal from "../organisms/AddressModal";
+import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
+import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
 
 const Dashboard = () => {
     const modalHeader = '¿Cuál es tu dirección?'
@@ -35,6 +37,7 @@ const Dashboard = () => {
             <SafeAreaView>
                 <ScrollView
                     contentInsetAdjustmentBehavior="automatic"
+                    keyboardShouldPersistTaps='always'
                     style={styles.scrollView}>
                     <View style={styles.dashboardContainer}>
                         <CardAtom  style={[styles.cardVet]} text={'Vets a Domicilio'} />

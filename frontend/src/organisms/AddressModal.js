@@ -18,9 +18,7 @@ const AddressModal = () => {
                 {step === 0 ? (
                     <>
                         <TextAtom>Tu ubicacion nos permitirá encontrar los veterinarios o clínicas más cercanas.</TextAtom>
-                        <View>
-                            <GoogleAutocompleteInputAtom setCoordinates={setCoordinates}/>
-                        </View>
+                        <GoogleAutocompleteInputAtom setCoordinates={setCoordinates}/>
                     </>
                 ) : (
                     <>
@@ -28,7 +26,7 @@ const AddressModal = () => {
                         <TextAtom>Direccion que puso el user</TextAtom>
                     </>
                 )}
-            <View styles={styles.addressModal}>
+            <View>
                 <ButtonAtom defaultButton>Agregar Dirección</ButtonAtom>
             </View>
         </View>
