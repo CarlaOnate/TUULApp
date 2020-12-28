@@ -35,14 +35,20 @@ const Map = ({coordinates}) => {
     useEffect(() => {
         MapboxGL.setTelemetryEnabled(false);
     }, [])
-    console.log(userLocation)
+
+    // const centerMap = async () => {
+    //     await this._map.getPointInView([coordinates.lat, coordinates.lng]);
+    // }
+    //
+    // useEffect(centerMap, [coordinates])
+
 
 
     return (
         <View style={styles.page}>
             <View style={styles.container}>
                 <MapboxGL.MapView style={styles.map}>
-                    <MapboxGL.Camera followZoomLevel={5} centerCoordinate={userLocation}/>
+                    <MapboxGL.Camera followZoomLevel={5}/>
                 </MapboxGL.MapView>
             </View>
         </View>

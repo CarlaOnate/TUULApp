@@ -1,5 +1,5 @@
 import React from 'react';
-import {View } from 'react-native'
+import Geocoder from 'react-native-geocoding';
 import { gql, useQuery } from '@apollo/client';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import TextAtom from "../atoms/TextAtom";
@@ -12,22 +12,28 @@ const GET_ENV_VAR = gql`
     }
 `
 
-const GoogleAutocompleteInputAtom = ({setCoordinates}) => {
+const GoogleAutocompleteInputAtom = ({setCoordinates, setStep}) => {
 
     const {data, loading, error} = useQuery(GET_ENV_VAR, {variables: {variable: 'GOOGLE_API_KEY'}})
+    data && Geocoder.init(data.env); // use a valid API key
+
 
     if(error) return <TextAtom>Alog salió mal</TextAtom>
     if(loading) return <TextAtom>Spinner...</TextAtom>
-    console.log('Google autocomplete', data)
 
     return (
         <GooglePlacesAutocomplete
             placeholder='Search'
             currentLocation={true}
             currentLocationLabel={'Ubicación actual'}
-            onPress={(data, details = null) => {
+            onPress={async (data, details = null) => {
                 // 'details' is provided when fetchDetails = true
-                console.log(data, details);
+                console.log(data);
+                const {results} = await Geocoder.from(data.description)
+                const coordinates = results[0].geometry.location
+                console.log(results, coordinates.lat, coordinates.lng)
+                setCoordinates({lat: coordinates.lat, lng: coordinates.lng})
+                setStep(1)
             }}
             query={{
                 key: data.env,

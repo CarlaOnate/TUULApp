@@ -11,14 +11,16 @@ import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
 
 const AddressModal = () => {
     const [step, setStep] = useState(0)
-    const [coordinates, setCoordinates] = useState({lat: '', lon: ''})
+    const [coordinates, setCoordinates] = useState({lat: '', lng: ''})
+
+    console.log('coordinates', coordinates)
 
     return (
         <View>
                 {step === 0 ? (
                     <>
                         <TextAtom>Tu ubicacion nos permitirá encontrar los veterinarios o clínicas más cercanas.</TextAtom>
-                        <GoogleAutocompleteInputAtom setCoordinates={setCoordinates}/>
+                        <GoogleAutocompleteInputAtom setCoordinates={setCoordinates} setStep={setStep}/>
                     </>
                 ) : (
                     <>
