@@ -8,6 +8,7 @@ import {SafeAreaView, ScrollView, View, StatusBar} from 'react-native';
 import styles from '../styles/dashboard.styles';
 import LongButton from '../atoms/db_longButton/db_longButtonAtom';
 import ShortButton from '../atoms/db_shortButton/db_shortButtonAtom';
+import AddressModal from '../organisms/AddressModal'
 import userContext from '../contexts/userContext';
 
 const Dashboard = ({navigation}) => {
@@ -26,6 +27,7 @@ const Dashboard = ({navigation}) => {
       <SafeAreaView style={{flex: 1}}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
+          keyboardShouldPersistTaps='always'
           style={styles.scrollView}>
           <View styler={styles.dashboardContainer}>
             <View

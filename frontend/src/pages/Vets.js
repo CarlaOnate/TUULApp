@@ -7,8 +7,6 @@ import React, {useContext, useState, useEffect} from 'react';
 import {SafeAreaView, ScrollView, View, StatusBar} from 'react-native';
 import styles from '../styles/dashboard.styles';
 import ShortButton from '../atoms/db_shortButton/db_shortButtonAtom';
-import ModalMolecule from '../molecules/ModalMolecule';
-import Map from '../atoms/Modals/Map';
 import userContext from '../contexts/userContext';
 
 const Vets = () => {
@@ -56,11 +54,6 @@ const Vets = () => {
               <ShortButton text={'Paseos'} backgroundColor={'#7CD1EB'} />
             </View>
           </View>
-          {showModal && (
-            <ModalMolecule showState={{show: showModal, set: setShowModal}}>
-              <Map />
-            </ModalMolecule>
-          )}
         </ScrollView>
       </SafeAreaView>
     </>
