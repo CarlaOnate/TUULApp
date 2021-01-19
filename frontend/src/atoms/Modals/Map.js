@@ -13,7 +13,7 @@ MapboxGL.setAccessToken("pk.eyJ1IjoiY2FybGFvIiwiYSI6ImNrNjgyb294aDAwb2Mzbm8ydHhn
 
 const styles = StyleSheet.create({
     page: {
-        width: 200,
+        width: 300,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F5FCFF"
@@ -30,6 +30,8 @@ const styles = StyleSheet.create({
 
 
 const Map = ({coordinates}) => {
+    //Todo: Add our spinner
+    if(!coordinates) return <Text>...</Text>
 
     useEffect(() => {
         MapboxGL.setTelemetryEnabled(false);

@@ -36,7 +36,15 @@ const user = {
                 default:
                     throw new Error('Incorrect type provided in mutation argument')
             }
+        },
+
+        addAddress: async (_, {input}, ctx) => {
+            console.log('inside add address')
+            const {user: id} = ctx
+            console.log(input, id)
+
         }
+
     },
 
     Query: {

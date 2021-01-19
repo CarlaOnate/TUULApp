@@ -12,7 +12,7 @@ const GET_ENV_VAR = gql`
     }
 `
 
-const GoogleAutocompleteInputAtom = ({setCoordinates, setStep}) => {
+const GoogleAutocompleteInputAtom = ({setCoordinates, setStep, setAddress}) => {
 
     const {data, loading, error} = useQuery(GET_ENV_VAR, {variables: {variable: 'GOOGLE_API_KEY'}})
     data && Geocoder.init(data.env); // use a valid API key
@@ -24,17 +24,46 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep}) => {
     return (
         <GooglePlacesAutocomplete
             placeholder='Search'
-            currentLocation={true}
-            currentLocationLabel={'Ubicación actual'}
             onPress={async (data, details = null) => {
-                // 'details' is provided when fetchDetails = true
-                console.log(data);
                 const {results} = await Geocoder.from(data.description)
                 const coordinates = results[0].geometry.location
-                console.log(results, coordinates.lat, coordinates.lng)
                 setCoordinates({lat: coordinates.lat, lng: coordinates.lng})
+                //Setting address
+                console.log(results)
+                let street, number, neighbourhood
+                results[0].address_components.map(el => {
+                    const {types} = el
+                        if(types.includes('street_number')){
+                            number = el.short_name
+                        } else if (types.includes('route')){
+                            street = el.short_name
+                        } else if (types.includes('sublocality')){
+                            neighbourhood = el.short_name
+                        }
+                })
+
+                setAddress({
+                    street,
+                    number,
+                    neighbourhood,
+                })
+
+                // 0: "Petén 657"
+                // 1: " Letran Valle"
+                // 2: " Ciudad de México"
+                // 3: " CDMX"
+                // 4: " México"
+                // ------------------
+                // 0: "Bolivar 45"
+                // 1: " Calle de Bolívar"
+                // 2: " Centro Histórico de la Ciudad de México"
+                // 3: " Centro"
+                // 4: " Ciudad de México"
+                // 5: " CDMX"
+                // 6: " México"
                 setStep(1)
             }}
+            fetchDetails={true}
             query={{
                 key: data.env,
                 language: 'es',
@@ -43,9 +72,8 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep}) => {
             styles={{
                 textInput: {
                     width: '100%'
-                }
+                },
             }}
-            enablePoweredByContainer={true}
         />
     );
 }

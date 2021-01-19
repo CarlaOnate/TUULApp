@@ -21,6 +21,7 @@ export default StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 20,
         padding: 20,
+        justifyContent: 'space-between',
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -39,4 +40,7 @@ export default StyleSheet.create({
     closeButton: {
         alignSelf: 'flex-end'
     },
+    modalButton: {
+        height: 50,
+    }
 });

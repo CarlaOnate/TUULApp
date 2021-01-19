@@ -13,6 +13,14 @@ import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
 const AddressModal = ({show, set}) => {
     const [step, setStep] = useState(0)
     const [coordinates, setCoordinates] = useState({lat: '', lng: ''})
+    const [address, setAddress] = useState({
+        street: '',
+        number: '',
+        neighbourhood: '',
+        city: '',
+        state: '',
+        zipCode: ''
+    })
 
     const titles = ['¿Cúal es tu dirección?', 'Confirma tu dirección']
 
@@ -29,6 +37,10 @@ const AddressModal = ({show, set}) => {
             </TextAtom>
         </TouchableOpacity>
     )
+
+    const submitAddress = () => {
+        console.log('Click', address)
+    }
 
     console.log('steps', step)
 
@@ -51,7 +63,7 @@ const AddressModal = ({show, set}) => {
                             {step === 0 ? (
                                 <>
                                     <TextAtom>Tu ubicacion nos permitirá encontrar los veterinarios o clínicas más cercanas.</TextAtom>
-                                    <GoogleAutocompleteInputAtom setCoordinates={setCoordinates} setStep={setStep}/>
+                                    <GoogleAutocompleteInputAtom setCoordinates={setCoordinates} setStep={setStep} setAddress={setAddress}/>
                                 </>
                             ) : (
                                 <>
@@ -59,11 +71,11 @@ const AddressModal = ({show, set}) => {
                                 </>
                             )}
                         </View>
+                        <View styles={styles.modalButton}>
+                            <ButtonAtom defaultButton onPress={submitAddress}>Agregar Dirección</ButtonAtom>
+                        </View>
                     </View>
                 </View>
-            <View>
-                <ButtonAtom defaultButton>Agregar Dirección</ButtonAtom>
-            </View>
             </Modal>
     );
 }

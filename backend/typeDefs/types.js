@@ -16,6 +16,16 @@ const types = gql`
     }
     
     #User types
+        #Inputs
+    input AddressInput {
+        street: String,
+        number: String,
+        neighbourhood: String,
+        city: String,
+        state: String,
+        zipCode: String
+    }
+    
     type newUser {
         id: ID
         name: String
@@ -36,6 +46,8 @@ const types = gql`
         pets: String
         paymentMethods: String
     }
+    
+    
 `
 
 module.exports = types
