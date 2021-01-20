@@ -40,6 +40,7 @@ const user = {
 
         addAddress: async (_, {input}, ctx) => {
             console.log('inside add address')
+            console.log(ctx)
             const {user: id} = ctx
             console.log(input, id)
 

@@ -30,7 +30,7 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep, setAddress}) => {
                 setCoordinates({lat: coordinates.lat, lng: coordinates.lng})
                 //Setting address
                 console.log(results)
-                let street, number, neighbourhood
+                let street, number, neighbourhood, city, state, zipCode
                 results[0].address_components.map(el => {
                     const {types} = el
                         if(types.includes('street_number')){
@@ -39,6 +39,13 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep, setAddress}) => {
                             street = el.short_name
                         } else if (types.includes('sublocality')){
                             neighbourhood = el.short_name
+                        } else if (types.includes('administrative_area_level_1')){
+                            //Todo: Check which code is for state and which is for city
+                            state = el.short_name
+                        } else if (types.includes('country')){
+                            state = el.short_name
+                        } else if (types.includes('postal_code')){
+                            zipCode = el.short_name
                         }
                 })
 
@@ -46,21 +53,11 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep, setAddress}) => {
                     street,
                     number,
                     neighbourhood,
+                    city,
+                    state,
+                    zipCode
                 })
 
-                // 0: "Petén 657"
-                // 1: " Letran Valle"
-                // 2: " Ciudad de México"
-                // 3: " CDMX"
-                // 4: " México"
-                // ------------------
-                // 0: "Bolivar 45"
-                // 1: " Calle de Bolívar"
-                // 2: " Centro Histórico de la Ciudad de México"
-                // 3: " Centro"
-                // 4: " Ciudad de México"
-                // 5: " CDMX"
-                // 6: " México"
                 setStep(1)
             }}
             fetchDetails={true}

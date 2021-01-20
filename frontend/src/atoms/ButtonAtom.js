@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Pressable,
+    TouchableOpacity,
     Button
 } from 'react-native'
 import styles from '../styles/general.styles'
@@ -17,9 +17,9 @@ const ButtonAtom = ({defaultButton, onPress, children}) => {
     )
 
     return (
-        <Pressable styles={styles.button} onPress={onPress}>
+        <TouchableOpacity styles={styles.button} onPress={onPress}>
             <TextAtom>{children}</TextAtom>
-        </Pressable>
+        </TouchableOpacity>
     );
 }
 
