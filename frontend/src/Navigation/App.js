@@ -24,7 +24,6 @@ import {
   InMemoryCache,
   createHttpLink,
   ApolloClient,
-  ApolloLink,
 } from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 import userContext from '../contexts/userContext';
@@ -36,13 +35,14 @@ const httpLink = createHttpLink({
 });
 
 const App = () => {
+
   const ctx = useContext(userContext);
 
   const contextLink = setContext((_, {headers}) => {
     return {
       headers: {
         ...headers,
-        user: ctx.user.id,
+        user: ctx.user[0] && ctx.user[0]._id,
       },
     };
   });

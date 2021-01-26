@@ -53,7 +53,7 @@ const AddressModal = ({show, set}) => {
         await addAddress({variables: {
             input: address
         }})
-        console.log('data', data)
+        if(data) set(!show)
     }
 
     console.log('steps', step)

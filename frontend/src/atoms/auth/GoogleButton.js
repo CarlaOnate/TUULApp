@@ -30,8 +30,8 @@ const GoogleButton = ({errorState, context, loginUser, loginUserResponse}) => {
     const loginResponse = () => {
         console.log(data)
         if(data){
-            context.setUser(JSON.parse(data.loginUser)[0])
-            console.log('before navigation', navigation)
+            context.setUser(JSON.parse(data.loginUser))
+            console.log('before navigation')
             navigation.navigate('Dashboard')
         }
     }

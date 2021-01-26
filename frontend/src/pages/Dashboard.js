@@ -12,14 +12,17 @@ import AddressModal from '../organisms/AddressModal'
 import userContext from '../contexts/userContext';
 
 const Dashboard = ({navigation}) => {
-  const user = useContext(userContext);
+  const ctx = useContext(userContext);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (!user.address) {
+    if (!ctx.user[0].address.street) {
+        console.log(ctx.user[0].address)
       setShowModal(true);
+    } else {
+        setShowModal(true)
     }
-  }, [user.address]);
+  }, [ctx.user[0].address]);
 
   return (
     <>

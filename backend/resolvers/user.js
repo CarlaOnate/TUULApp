@@ -13,12 +13,13 @@ const user = {
                 console.log('running google')
                 try {
                     const user = await User.find({email})
-                    //console.log('user', user)
+                    // console.log('user', user)
                     if(user.length === 0){
                         //Todo: Save user lastname, split name and save one in name and other in lastname
                         //User does not exists in DB
                         const newUser = await User.create({name, email, profilePhoto: photo, googleAccount: {idToken, googleId: googleId}})
                         // console.log('newUser', newUser)
+                        //Todo: Check if newUser return array to return then newUser[0] or if it's an object
                         return JSON.stringify(newUser)
                     } else {
                         return JSON.stringify(user)
@@ -40,10 +41,15 @@ const user = {
 
         addAddress: async (_, {input}, ctx) => {
             console.log('inside add address')
-            console.log(ctx)
             const {user: id} = ctx
             console.log(input, id)
 
+            if(id === 'undefined') throw new Error('Id undefined')
+
+            const updatedUser = await User.findByIdAndUpdate(id, {address: input}, {new: true})
+            console.log('updatedUser', updatedUser)
+
+            return JSON.stringify(updatedUser)
         }
 
     },

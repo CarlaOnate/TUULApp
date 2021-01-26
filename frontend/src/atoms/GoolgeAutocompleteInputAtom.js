@@ -41,9 +41,9 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep, setAddress}) => {
                             neighbourhood = el.short_name
                         } else if (types.includes('administrative_area_level_1')){
                             //Todo: Check which code is for state and which is for city
-                            state = el.short_name
-                        } else if (types.includes('country')){
-                            state = el.short_name
+                            if(!state){
+                                state = el.long_name
+                            }
                         } else if (types.includes('postal_code')){
                             zipCode = el.short_name
                         }
