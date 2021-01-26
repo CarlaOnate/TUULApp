@@ -19,8 +19,6 @@ const Dashboard = ({navigation}) => {
     if (!ctx.user[0].address.street) {
         console.log(ctx.user[0].address)
       setShowModal(true);
-    } else {
-        setShowModal(true)
     }
   }, [ctx.user[0].address]);
 

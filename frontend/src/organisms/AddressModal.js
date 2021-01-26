@@ -9,7 +9,6 @@ import ButtonAtom from "../atoms/ButtonAtom";
 import TextAtom from "../atoms/TextAtom";
 import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
 import {gql, useMutation} from '@apollo/client';
-import {add} from "react-native-reanimated";
 
 const ADD_ADDRESS = gql`
     mutation addAddress($input: AddressInput){
@@ -49,14 +48,12 @@ const AddressModal = ({show, set}) => {
     )
 
     const submitAddress = async () => {
-        console.log('Click', address)
         await addAddress({variables: {
             input: address
         }})
+        console.log(data)
         if(data) set(!show)
     }
-
-    console.log('steps', step)
 
 
     return (

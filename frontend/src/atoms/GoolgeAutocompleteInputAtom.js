@@ -53,7 +53,6 @@ const GoogleAutocompleteInputAtom = ({setCoordinates, setStep, setAddress}) => {
                     street,
                     number,
                     neighbourhood,
-                    city,
                     state,
                     zipCode
                 })
