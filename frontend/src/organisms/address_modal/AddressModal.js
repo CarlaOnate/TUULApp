@@ -3,11 +3,14 @@ import {
     View,
     TouchableOpacity, Modal
 } from 'react-native';
-import styles from '../styles/modal.styles'
-import Map from "../atoms/Modals/Map";
-import ButtonAtom from "../atoms/ButtonAtom";
-import TextAtom from "../atoms/TextAtom";
-import GoogleAutocompleteInputAtom from "../atoms/GoolgeAutocompleteInputAtom";
+import stylesModal from '../../styles/modal.styles'
+import styles from './addressModal.styles'
+
+import Map from "../../atoms/Modals/Map";
+import ButtonAtom from "../../atoms/ButtonAtom";
+import TextAtom from "../../atoms/TextAtom";
+import HeadingAtom from '../../atoms/heading_atom/HeadingAtom'
+import GoogleAutocompleteInputAtom from "../../atoms/GoolgeAutocompleteInputAtom";
 import {gql, useMutation} from '@apollo/client';
 
 const ADD_ADDRESS = gql`
@@ -35,7 +38,7 @@ const AddressModal = ({show, set}) => {
 
     const CloseModal = () => (
         <TouchableOpacity style={styles.closeButton} onPress={() => {set(!show)}}>
-            <TextAtom>Close this shit!</TextAtom>
+            <TextAtom>X</TextAtom>
         </TouchableOpacity>
     )
 
@@ -51,7 +54,6 @@ const AddressModal = ({show, set}) => {
         await addAddress({variables: {
             input: address
         }})
-        console.log(data)
         if(data) set(!show)
     }
 
@@ -61,29 +63,29 @@ const AddressModal = ({show, set}) => {
                 animationType="slide"
                 transparent={true}
                 visible={show}>
-                <View style={[styles.bottomView, styles.modal]}>
-                    <View style={styles.modalView}>
+                <View style={[stylesModal.bottomView, stylesModal.modal]}>
+                    <View style={stylesModal.modalView}>
 
-                        <View style={styles.headerContainer}>
+                        <View style={stylesModal.headerContainer}>
                             {step > 0 && <PreviousStep />}
-                            <TextAtom>{titles[step]}</TextAtom>
+                            <HeadingAtom type={'h1'}>{titles[step]}</HeadingAtom>
                             <CloseModal />
                         </View>
 
                         <View>
                             {step === 0 ? (
                                 <>
-                                    <TextAtom>Tu ubicacion nos permitirá encontrar los veterinarios o clínicas más cercanas.</TextAtom>
+                                    <TextAtom style={styles.mainText}>Tu ubicacion nos permitirá encontrar los veterinarios o clínicas más cercanas.</TextAtom>
                                     <GoogleAutocompleteInputAtom setCoordinates={setCoordinates} setStep={setStep} setAddress={setAddress}/>
                                 </>
                             ) : (
                                 <>
                                     <Map coordinates={coordinates}/>
+                                    <View style={styles.modalButton}>
+                                        <ButtonAtom onPress={submitAddress}>Agregar Dirección</ButtonAtom>
+                                    </View>
                                 </>
                             )}
-                        </View>
-                        <View styles={styles.modalButton}>
-                            <ButtonAtom onPress={submitAddress}>Agregar Dirección</ButtonAtom>
                         </View>
                     </View>
                 </View>

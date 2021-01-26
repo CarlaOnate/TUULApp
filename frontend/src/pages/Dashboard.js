@@ -8,7 +8,7 @@ import {SafeAreaView, ScrollView, View, StatusBar} from 'react-native';
 import styles from '../styles/dashboard.styles';
 import LongButton from '../atoms/db_longButton/db_longButtonAtom';
 import ShortButton from '../atoms/db_shortButton/db_shortButtonAtom';
-import AddressModal from '../organisms/AddressModal'
+import AddressModal from '../organisms/address_modal/AddressModal'
 import userContext from '../contexts/userContext';
 
 const Dashboard = ({navigation}) => {
@@ -19,6 +19,8 @@ const Dashboard = ({navigation}) => {
     if (!ctx.user[0].address.street) {
         console.log(ctx.user[0].address)
       setShowModal(true);
+    } else {
+        setShowModal(true)
     }
   }, [ctx.user[0].address]);
 

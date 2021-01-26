@@ -16,7 +16,7 @@ export default StyleSheet.create({
     },
     modalView: {
         width: '110%',
-        height: 400,
+        height: 600,
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
@@ -40,7 +40,5 @@ export default StyleSheet.create({
     closeButton: {
         alignSelf: 'flex-end'
     },
-    modalButton: {
-        height: 50,
-    }
+
 });
